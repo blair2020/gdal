@@ -10,5 +10,7 @@ img_geotrans = image.GetGeoTransform()  # 图像的坐标和分辨率信息等
 print('img_geotrans:', img_geotrans)
 img_proj = image.GetProjection()  # 图像的投影信息
 print('img_proj:', img_proj)
+
+# 后面应该修改
 img_data = image.ReadAsArray(0, 0, img_width, img_height)
 print('遥感影像的shape：', img_data.shape)
