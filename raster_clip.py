@@ -1,6 +1,13 @@
 # *_*coding: utf-8 *_*
-# author --liumingliang--
+# author --blair--
 
+'''
+此程序可处理单张遥感图像分幅问题
+缺点：不能处理大图像，内存不足
+可处理大图像的修改版见raster_clip2.py
+'''
+# 问题
+# MemoryError: Unable to allocate 44.6 GiB for an array with shape (3, 125940, 126756) and data type uint8
 
 import time
 from osgeo import gdal

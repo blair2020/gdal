@@ -1,6 +1,13 @@
 # *_*coding: utf-8 *_*
 # author --liming--
 
+'''
+此程序可处理多张遥感图像分幅问题
+缺点：不能处理大图像，内存不足
+可处理大图像的修改版见raster_clip2.py
+但raster_clip2.py是处理单张程序
+'''
+
 import os
 # import numpy as np
 from osgeo import gdal
