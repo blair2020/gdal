@@ -14,8 +14,8 @@ from osgeo import gdal
 # 开始时间
 t_start = time.time()
 # 待处理图像
-# image_path = 'G:/陆良县/陆良县图层/陆良县图层/Extract_tif11.tif'
-image_path = 'G:/陆良县/DLTB矢量转栅格/DLTB_PolygonToRaster51.tif'
+# image_path = 'E:/陆良县/陆良县图层/陆良县图层/Extract_tif11.tif'
+image_path = 'E:/陆良县/DLTB矢量转栅格/DLTB_PolygonToRaster51.tif'
 image = gdal.Open(image_path)
 print(image)
 img_width = image.RasterXSize  # 宽
@@ -33,7 +33,7 @@ print('datatype:', datatype)
 del image  # 删除变量,保留数据
 
 # 定义切图的大小（矩形框）
-size = 512
+size = 1024
 col_num = img_width // size  # 宽度可以分成几块
 row_num = img_height // size  # 高度可以分成几块
 total = col_num * row_num
@@ -41,8 +41,9 @@ print("row_num:%d   col_num:%d   total:%d" % (row_num, col_num, total))
 
 # 保存路径
 # save_path = 'G:/sat/'
-save_path = 'G:/label2/'
-
+# save_path = 'G:/label2/'
+# save_path = 'E:/luliangxian_dataset/clip_1024_version_OG/sat/'
+save_path = 'E:/luliangxian_dataset/clip_1024_version_OG/label/'
 for i in range(row_num):  # 高
     for j in range(col_num):  # 宽
         # print('i_j:', i, j)
@@ -64,7 +65,7 @@ for i in range(row_num):  # 高
         # else:
         #     datatype = gdal.GDT_Float32  # 6
 
-        filename = save_path + '{}_{}.tif'.format(i, j)
+        filename = save_path + '{0:0>3}_{1:0>3}.tif'.format(i, j)
         driver = gdal.GetDriverByName('GTiff')  # 获取指定格式的驱动
         # driver.Create(filename, img_width, img_height, img_bands, datatype)
         image = driver.Create(filename, size, size, channel, datatype)
@@ -77,7 +78,7 @@ for i in range(row_num):  # 高
             image.GetRasterBand(1).WriteArray(sub_image)
         else:
             for k in range(channel):
-                image.GetRasterBand(k + 1).WriteArray(sub_image[i])
+                image.GetRasterBand(k + 1).WriteArray(sub_image[k])
 
         del image  # 删除变量,保留数据
 
