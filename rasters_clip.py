@@ -86,15 +86,15 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='load remote sensing image and split to patch')
     # 待处理图像路径
     parser.add_argument('--image_path',
-                        default='/media/lm/1E7FBDC6EEE168BC/RS_Dataset/test_image/',
+                        default='E:/wanling_data/T1/',
                         help='remote sensing image path')
     # 分块大小
     parser.add_argument('--patch_size',
-                        default=1000,
+                        default=1024,
                         help='patch size')
     # 分块图像保存路径
     parser.add_argument('--patch_save',
-                        default='/media/lm/1E7FBDC6EEE168BC/RS_Dataset/patch_save/',
+                        default='E:/wanling_data/T1_processed/',
                         help='save path of patch image')
     args = parser.parse_args()
     print('待处理图像路径为:{}'.format(args.image_path))
@@ -110,10 +110,12 @@ if __name__ == '__main__':
 
     # 开始时间
     t_start = time.time()
+    num = 0
     for k in range(image_num):
         # 第k张图像开始处理时间
         time_start = time.time()
         img_name = image_path + image_list[k]
+        print('开始处理：', img_name)
         proj, geotrans, data = GRID().load_image(img_name)
 
         # 图像分块
@@ -121,12 +123,12 @@ if __name__ == '__main__':
         patch_save = args.patch_save
         channel, width, height = data.shape
 
-        num = 0
+
         for i in range(width // patch_size):  # 宽
             for j in range(height // patch_size):  # 高
                 num += 1
                 sub_image = data[:, i * patch_size:(i + 1) * patch_size, j * patch_size:(j + 1) * patch_size]
-                GRID().write_image(patch_save + '{}.tif'.format(num), proj, geotrans, sub_image)
+                GRID().write_image(patch_save + '{0:0>6}.tif'.format(num), proj, geotrans, sub_image)
 
         # 第k张图像结束处理时间
         time_end = time.time()
