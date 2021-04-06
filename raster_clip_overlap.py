@@ -9,7 +9,7 @@ from osgeo import gdal
 
 def raster_pixel_corp_with_overlap(raster_path, crop_size, overlap, save_dir):
     # 读取一些基本信息
-    image_name = os.path.splitext(os.path.split(raster_path))
+    image_name = os.path.splitext(os.path.split(raster_path)[0])[1]
     image = gdal.Open(raster_path)
     image_width = image.RasterXSize  # 宽
     image_height = image.RasterYSize  # 高
@@ -72,4 +72,7 @@ if __name__ == '__main__':
     # 保存路径
     crop_save_dir_ = ''
     raster_pixel_corp_with_overlap(raster_path_, crop_size_, overlap_, crop_save_dir_)
+
+# https://my.oschina.net/u/4369691/blog/3577097
+
 
