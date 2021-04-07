@@ -10,11 +10,11 @@ from lxml import etree
 from osgeo import gdal, osr
 
 """
-正射校正
+正射校正、投影转换
 """
 
 
-def ortho_rectification(raster_path, save_path, save_path2, demfile):
+def ortho_rectification_and_warp(raster_path, save_path, save_path2, demfile):
     raster_name = os.path.splitext(os.path.split(raster_path)[1])[0]
 
     # 分辨率
@@ -43,6 +43,7 @@ def ortho_rectification(raster_path, save_path, save_path2, demfile):
     warp_option = gdal.WarpOptions(dstSRS='EPSG:4326',
                                    creationOptions=["TILED=YES", "COMPRESS=LZW", "COPY_SRC_OVERVIEWS=YES"])
     gdal.Warp(save_path2, image, options=warp_option)
+    os.remove(save_path)
 
 
 if __name__ == '__main__':
@@ -54,5 +55,5 @@ if __name__ == '__main__':
     save_path2_ = r"E:\wanling_data\GF2\GF2_PMS1_E2.0_N41.3_20160929_L1A0001854771\out\GF2_PMS1_E2.0_N41.3_20160929_L1A0001854771-MSS1-warp.tiff"
     # DEM
     demfile_ = r"D:\Program Files\Exelis\ENVI53\data\GMTED2010.jp2"
-    # 正射校正
-    ortho_rectification(raster_path_, save_path_, save_path2_, demfile_)
+    # 正射校正、投影转换
+    ortho_rectification_and_warp(raster_path_, save_path_, save_path2_, demfile_)
